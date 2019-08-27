@@ -14,7 +14,12 @@ router.get('/add-product', (req, res, next) => {
 
     //another and clean way
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product'});
+    res.render('add-product', {pageTitle: 'Add Product',
+        path: '/admin/add-product',
+        activeAddProduct: true,
+        formsCss: true,
+        productCss: true
+    });
 });
 
 router.post('/add-product', (res, req, next) => {

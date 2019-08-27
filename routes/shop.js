@@ -13,7 +13,13 @@ router.get('/', (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     // We already mention view engine in app.js os it will look for shop.pug
     // inside views folder as views was also mentions using app.set
-    res.render('shop', {prods: adminData.products, pageTitle: 'Shops', path: '/', hasProducts: adminData.products.length > 0});
+    res.render('shop', {prods: adminData.products,
+        pageTitle: 'Shops',
+        path: '/',
+        hasProducts: adminData.products.length > 0,
+        activeShop: true,
+        productCss: true
+    });
 });
 
 module.exports = router;
