@@ -10,6 +10,18 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+    const id = req.params.productId;
+    Product.getProductById(id, (product) => {
+      res.render('shop/product-detail.ejs', {
+        product: product,
+        pageTitle: 'Product Details',
+        path: '/products'
+      });
+    });
+
+};
+
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/index', {
@@ -22,21 +34,27 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   res.render('shop/cart', {
-    pageTitle: 'Your Cart',
-    path: '/cart'
-  })
+    path: '/cart',
+    pageTitle: 'Your Cart'
+  });
 };
 
-exports.checkout = (req, res, next) => {
-  res.render('shop/checkout', {
-    path:'/checkout',
-    pageTitle: 'Checkout'
-  })
-};
+exports.postCart = (req, res, next) => {
+  const productId = req.body.productId;
+  console.log('[Controller]',productId);
+  res.redirect('/cart');
+}
 
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
-    pageTitle: 'Your Orders',
-    path: '/orders'
-  })
+    path: '/orders',
+    pageTitle: 'Your Orders'
+  });
+};
+
+exports.getCheckout = (req, res, next) => {
+  res.render('shop/checkout', {
+    path: '/checkout',
+    pageTitle: 'Checkout'
+  });
 };

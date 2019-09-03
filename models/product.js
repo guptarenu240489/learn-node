@@ -11,21 +11,22 @@ const getProductsFromFile = cb => {
   fs.readFile(p, (err, fileContent) => {
     if (err) {
       cb([]);
+    } else {
+      cb(JSON.parse(fileContent));
     }
-    cb(JSON.parse(fileContent));
   });
 };
 
 module.exports = class Product {
   constructor(title, imageUrl, description, price) {
     this.title = title;
-    // this.imageUrl = imageUrl;
-    this.imageUrl = 'https://images.pexels.com/photos/51342/books-education-school-literature-51342.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
+    this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
   }
 
   save() {
+    this.id = Math.random().toString();
     getProductsFromFile(products => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), err => {
@@ -36,5 +37,12 @@ module.exports = class Product {
 
   static fetchAll(cb) {
     getProductsFromFile(cb);
+  }
+
+  static getProductById(id, cb) {
+    getProductsFromFile(products => {
+      const product = products.find(p => p.id === id);
+      cb(product);
+    });
   }
 };
